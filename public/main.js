@@ -2,7 +2,9 @@
 let socket;
 
 function initSocket(onMessageCallback) {
-  socket = new WebSocket(`ws://${location.host}`);
+  // Usar WSS para conexiones seguras, WS para desarrollo local
+  const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+  socket = new WebSocket(`${protocol}//${location.host}`);
   socket.onmessage = onMessageCallback;
 }
 

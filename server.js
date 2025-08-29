@@ -6,7 +6,7 @@ const app = express();
 const server = require('http').createServer(app);
 const wss = new WebSocket.Server({ server });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 let clients = [];
 
@@ -31,7 +31,9 @@ wss.on('connection', (ws) => {
 app.use(express.static(path.join(__dirname, '.', 'public')));
 
 server.listen(PORT, () => {
-  console.log(`Servidor en http://localhost:${PORT}/control.html`);
-  console.log(`Servidor en http://localhost:${PORT}/presenter.html`);
+  console.log(`Servidor en puerto ${PORT}`);
+  console.log(`Control: http://localhost:${PORT}/control.html`);
+  console.log(`Presentador: http://localhost:${PORT}/presenter.html`);
+  console.log(`WebSocket: ws://localhost:${PORT}`);
 });
 
