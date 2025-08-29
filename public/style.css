@@ -1,0 +1,782 @@
+/* --- Estilos mejorados para el juego de preguntas --- */
+* { 
+  box-sizing: border-box; 
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #2d3748;
+  min-height: 100vh;
+  padding: 10px;
+  margin: 0;
+  overflow-x: hidden !important;
+}
+
+/* Clase para desactivar scroll horizontal a nivel documento durante animaciones */
+html.no-x-scroll {
+  overflow-x: hidden !important;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 18px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  max-height: 98vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+h2, h3 {
+  margin: 0 0 10px 0;
+  font-weight: 700;
+  color: #1a202c;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.8rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Los emojis mantienen sus colores originales */
+h2 span {
+  -webkit-text-fill-color: initial;
+  background: none;
+  background-clip: initial;
+}
+
+h3 {
+  font-size: 1.5rem;
+  color: #4a5568;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 10px;
+}
+
+/* Botones mejorados */
+button, select {
+  font-size: 15px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+button {
+  background: linear-gradient(135deg, #4299e1, #3182ce);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+button:hover::before {
+  left: 100%;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(66, 153, 225, 0.3);
+  background: linear-gradient(135deg, #3182ce, #2c5aa0);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button.answered {
+  background: linear-gradient(135deg, #f56565, #e53e3e);
+  text-decoration: line-through;
+  opacity: 0.8;
+}
+
+button.answered:hover {
+  background: linear-gradient(135deg, #e53e3e, #c53030);
+}
+
+select {
+  background: white;
+  border: 2px solid #e2e8f0;
+  min-width: 250px;
+  color: #4a5568;
+}
+
+select:focus {
+  outline: none;
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+/* Controles */
+.controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.group {
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f7fafc, #edf2f7);
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.group h3 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #2d3748;
+  font-size: 1.3rem;
+}
+
+/* Presentador - Respuestas */
+#answers {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+
+#answers > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #f7fafc, #edf2f7);
+  border: 2px solid #e2e8f0;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  min-height: 70px;
+}
+
+#answers .text {
+  font-weight: 600;
+  font-size: 18px;
+  color: #2d3748;
+  flex: 1;
+  margin-right: 20px;
+}
+
+#answers .points {
+  font-weight: 700;
+  font-size: 24px;
+  color: #1a202c;
+  background: linear-gradient(135deg, #48bb78, #38a169);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Emoji container */
+.answer-emoji {
+  font-size: 40px;
+  margin-left: 15px;
+  opacity: 0;
+  transform: scale(0.5) rotate(0deg);
+  transition: all 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+}
+
+.answer-emoji.show {
+  opacity: 1;
+  transform: scale(1.2) rotate(360deg);
+}
+
+/* Animación específica para emojis de celebración (respuestas correctas) */
+#answers > div.reveal:not(.zero-points) .answer-emoji.show {
+  animation: emojiCelebration 0.8s ease forwards;
+}
+
+/* Animación específica para emojis de decepción (respuestas incorrectas) */
+#answers > div.reveal.zero-points .answer-emoji.show {
+  animation: emojiDisappointment 0.8s ease forwards;
+}
+
+/* Estados para cubrir y revelar */
+#answers > div.covered {
+  position: relative;
+  color: transparent;
+}
+
+#answers > div.covered .points,
+#answers > div.covered .text {
+  color: transparent;
+}
+
+#answers > div.covered::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+  box-shadow: inset 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+#answers > div.reveal {
+  color: inherit;
+  transform: none; /* sin rebote */
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  animation: none; /* quitar animación de rebote */
+}
+
+#answers > div.reveal .points,
+#answers > div.reveal .text {
+  color: inherit;
+  animation: none; /* sin animación de entrada */
+}
+
+#answers > div.reveal::after {
+  animation: none; /* sin fade del cover */
+}
+
+/* Efecto especial para respuestas con 0 puntos */
+#answers > div.reveal.zero-points {
+  animation: none; /* quitar rebote en 0 puntos */
+  background: linear-gradient(135deg, #fed7d7, #feb2b2) !important;
+  border-color: #fc8181 !important;
+}
+
+#answers > div.reveal.zero-points .points {
+  color: #e53e3e !important;
+  background: none !important;
+  -webkit-text-fill-color: #e53e3e !important;
+}
+
+#answers > div.reveal.zero-points .text {
+  animation: textReveal 0.6s ease 0.3s both;
+  color: #c53030 !important;
+}
+
+/* Colores diferentes para cada respuesta revelada */
+#answers > div.reveal[data-num="1"] {
+  background: linear-gradient(135deg, #fff9db, #fef3c7); /* amarillos suaves */
+  border-color: #facc15; /* amarillo dorado */
+}
+
+#answers > div.reveal[data-num="2"] {
+  background: linear-gradient(135deg, #c6f6d5, #9ae6b4);
+  border-color: #68d391;
+}
+
+#answers > div.reveal[data-num="3"] {
+  background: linear-gradient(135deg, #bee3f8, #90cdf4);
+  border-color: #63b3ed;
+}
+
+#answers > div.reveal[data-num="4"] {
+  background: linear-gradient(135deg, #faf5ff, #e9d8fd);
+  border-color: #b794f4;
+}
+
+@keyframes coverFade {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.2);
+  }
+}
+
+/* Animación para revelar respuestas */
+@keyframes revealAnswer {
+  0% {
+    transform: scale(0.8) rotateY(90deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.1) rotateY(45deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.02) rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+/* Animación para el texto de las respuestas */
+@keyframes textReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Animación especial para respuestas con 0 puntos */
+@keyframes revealZeroPoints {
+  0% {
+    transform: scale(0.8) rotateX(90deg);
+    opacity: 0;
+    background: linear-gradient(135deg, #fed7d7, #feb2b2);
+  }
+  25% {
+    transform: scale(1.2) rotateX(45deg);
+    opacity: 0.9;
+    background: linear-gradient(135deg, #feb2b2, #fc8181);
+  }
+  50% {
+    transform: scale(0.9) rotateX(0deg);
+    opacity: 1;
+    background: linear-gradient(135deg, #fc8181, #f56565);
+  }
+  75% {
+    transform: scale(1.05) rotateX(-10deg);
+    opacity: 1;
+    background: linear-gradient(135deg, #f56565, #e53e3e);
+  }
+  100% {
+    transform: scale(1.02) rotateX(0deg);
+    opacity: 1;
+    background: linear-gradient(135deg, #fed7d7, #feb2b2);
+  }
+}
+
+
+
+/* Animación para emojis de celebración */
+@keyframes emojiCelebration {
+  0% {
+    transform: scale(1.2) rotate(360deg);
+  }
+  25% {
+    transform: scale(1.4) rotate(380deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(340deg);
+  }
+  75% {
+    transform: scale(1.3) rotate(370deg);
+  }
+  100% {
+    transform: scale(1.2) rotate(360deg);
+  }
+}
+
+/* Animación para emojis de decepción */
+@keyframes emojiDisappointment {
+  0% {
+    transform: scale(1.2) rotate(360deg);
+  }
+  25% {
+    transform: scale(0.8) rotate(340deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(380deg);
+  }
+  75% {
+    transform: scale(0.9) rotate(350deg);
+  }
+  100% {
+    transform: scale(1.2) rotate(360deg);
+  }
+}
+
+/* Animación para serpentinas */
+@keyframes confettiFall {
+  0% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+    opacity: 1;
+  }
+  15% {
+    transform: translate(calc(var(--vx) * 0.3), calc(var(--vy) * 0.3)) rotate(45deg) scale(1.1);
+    opacity: 1;
+  }
+  30% {
+    transform: translate(calc(var(--vx) * 0.6), calc(var(--vy) * 0.6 + 20px)) rotate(90deg) scale(1);
+    opacity: 1;
+  }
+  45% {
+    transform: translate(calc(var(--vx) * 0.9), calc(var(--vy) * 0.9 + 40px)) rotate(135deg) scale(0.9);
+    opacity: 0.9;
+  }
+  60% {
+    transform: translate(calc(var(--vx) * 1.2), calc(var(--vy) * 1.2 + 60px)) rotate(180deg) scale(0.8);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translate(calc(var(--vx) * 1.5), calc(var(--vy) * 1.5 + 80px)) rotate(225deg) scale(0.7);
+    opacity: 0.6;
+  }
+  90% {
+    transform: translate(calc(var(--vx) * 1.8), calc(var(--vy) * 1.8 + 100px)) rotate(270deg) scale(0.6);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate(calc(var(--vx) * 2.1), calc(var(--vy) * 2.1 + 120px)) rotate(360deg) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* Animación para el logo central de celebración */
+@keyframes logoCelebration {
+  0% {
+    transform: scale(0) translateY(0);
+    opacity: 0;
+  }
+  15% {
+    transform: scale(1.2) translateY(-30px);
+    opacity: 1;
+  }
+  30% {
+    transform: scale(0.9) translateY(-10px);
+    opacity: 1;
+  }
+  45% {
+    transform: scale(1.1) translateY(-25px);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(0.95) translateY(-5px);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(1.05) translateY(-20px);
+    opacity: 0.9;
+  }
+  90% {
+    transform: scale(0.98) translateY(-8px);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 0;
+  }
+}
+
+/* Animación para el logo central triste */
+@keyframes logoTriste {
+  0% {
+    transform: scale(0) translateY(0);
+    opacity: 0;
+  }
+  15% {
+    transform: scale(1.1) translateY(-20px);
+    opacity: 1;
+  }
+  30% {
+    transform: scale(0.95) translateY(-15px);
+    opacity: 1;
+  }
+  45% {
+    transform: scale(1.05) translateY(-18px);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(0.98) translateY(-12px);
+    opacity: 1;
+  }
+  75% {
+    transform: scale(1.02) translateY(-16px);
+    opacity: 0.9;
+  }
+  90% {
+    transform: scale(0.99) translateY(-13px);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 0;
+  }
+}
+
+/* Animación para las nubes oscuras */
+@keyframes cloudFloat {
+  0% {
+    transform: scale(0) translateY(20px);
+    opacity: 0;
+  }
+  20% {
+    transform: scale(1.1) translateY(10px);
+    opacity: 0.8;
+  }
+  40% {
+    transform: scale(0.95) translateY(15px);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(1.05) translateY(8px);
+    opacity: 1;
+  }
+  80% {
+    transform: scale(0.98) translateY(12px);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 0;
+  }
+}
+
+/* Animación para las gotas de lluvia */
+@keyframes raindropFall {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  20% {
+    transform: translateY(20px) scale(1.1);
+    opacity: 1;
+  }
+  40% {
+    transform: translateY(40px) scale(1);
+    opacity: 1;
+  }
+  60% {
+    transform: translateY(60px) scale(0.8);
+    opacity: 0.9;
+  }
+  80% {
+    transform: translateY(80px) scale(0.7);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(100px) scale(0.6);
+    opacity: 0;
+  }
+}
+
+/* Marcador mejorado */
+.scoreboard {
+  display: flex;
+  gap: 15px;
+  margin: 15px 0;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.scoreboard .card {
+  flex: 1;
+  text-align: center;
+  padding: 19px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #f7fafc, #edf2f7);
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  max-width: 171px;
+}
+
+.scoreboard .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.scoreboard .card div:first-child {
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 9px;
+  font-size: 15px;
+}
+
+.scoreboard .value {
+  font-size: 34px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Botón de ganador especial */
+.winner-btn {
+  background: linear-gradient(135deg, #f6ad55, #ed8936) !important;
+  color: white !important;
+  font-weight: 700 !important;
+  font-size: 18px !important;
+  padding: 15px 25px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 6px 20px rgba(246, 173, 85, 0.4) !important;
+  transition: all 0.3s ease !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.winner-btn:hover {
+  background: linear-gradient(135deg, #ed8936, #dd6b20) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(246, 173, 85, 0.5) !important;
+}
+
+.winner-btn:active {
+  transform: translateY(-1px) !important;
+}
+
+/* Overlay del ganador */
+.winner-overlay {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Estilos específicos para la pregunta */
+#question {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1a202c;
+  text-align: center;
+  margin: 15px 0;
+  padding: 15px;
+  background: linear-gradient(135deg, #f7fafc, #edf2f7);
+  border-radius: 15px;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  line-height: 1.4;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Estilos específicos para control.html */
+.control-view .group {
+  margin-top: 9px;
+  padding: 10px;
+  text-align: center;
+}
+
+.control-view .group h3 {
+  margin-bottom: 11px;
+  font-size: 1.3rem;
+}
+
+.control-view button {
+  padding: 6px 15px;
+  font-size: 14px;
+  margin: 3px;
+  min-width: 85px;
+}
+
+.control-view select {
+  min-width: 190px;
+  padding: 6px 11px;
+  font-size: 14px;
+}
+
+.control-view .controls {
+  margin-bottom: 15px;
+  gap: 10px;
+  justify-content: center;
+}
+
+.control-view h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+/* Centrar botones de respuestas en control */
+.control-view .group:has(#btnAns1) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.control-view .group:has(#btnAns1) button {
+  margin: 4px;
+  min-width: 114px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+    margin: 10px;
+  }
+  
+  h2 {
+    font-size: 2rem;
+  }
+  
+  #question {
+    font-size: 1.5rem;
+    padding: 15px;
+    min-height: 60px;
+  }
+  
+  .controls {
+    flex-direction: column;
+  }
+  
+  select {
+    min-width: 100%;
+  }
+  
+  .scoreboard {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .scoreboard .card {
+    max-width: 120px;
+    padding: 15px;
+  }
+  
+  #answers > div {
+    padding: 15px 20px;
+  }
+  
+  #answers .text {
+    font-size: 16px;
+  }
+  
+  .answer-emoji {
+    width: 50px;
+    height: 50px;
+    font-size: 30px;
+  }
+}
+

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Control</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container control-view">
+  <h2><span>🎮</span> Control de Juego <span>🎮</span></h2>
+
+  <div class="controls">
+  <select id="questionList">
+    <option value="">Selecciona una pregunta</option>
+  </select>
+  <button onclick="sendQuestion()">Enviar Pregunta</button>
+  </div>
+
+  <div class="group">
+    <h3>Respuestas (1-4)</h3>
+    <button id="btnAns1" onclick="sendAnswer(1)">Respuesta 1</button>
+    <button id="btnAns2" onclick="sendAnswer(2)">Respuesta 2</button>
+    <button id="btnAns3" onclick="sendAnswer(3)">Respuesta 3</button>
+    <button id="btnAns4" onclick="sendAnswer(4)">Respuesta 4</button>
+  </div>
+
+  <div class="group">
+    <h3>Asignar Puntaje</h3>
+    <button onclick="strike()">Strike</button>
+    <button onclick="undoStrike()">Reinicar Strike</button>
+  </div>
+
+  <div class="group">
+    <h3>Pozo de ronda</h3>
+    <button onclick="assignRound('A')">Asignar puntos a Grupo A</button>
+    <button onclick="assignRound('B')">Asignar puntos a Grupo B</button>
+  </div>
+
+  <div class="group">
+    <h3>Finalizar Juego</h3>
+    <button onclick="showWinner()" class="winner-btn">Presentar Ganador</button>
+  </div>
+  </div>
+
+  <script src="main.js"></script>
+  <script>
+    // Inicializa el socket para que esté disponible al hacer clic en los botones
+    initSocket(() => {});
+    // Cargar preguntas dinámicamente
+    let QUESTION_BANK = [];
+    loadQuestions().then(list => {
+      QUESTION_BANK = list;
+      const sel = document.getElementById('questionList');
+      list.forEach((q, idx) => {
+        const opt = document.createElement('option');
+        opt.value = String(idx);
+        opt.textContent = q.question;
+        sel.appendChild(opt);
+      });
+      sel.addEventListener('change', () => {
+        const idx = sel.value === '' ? -1 : Number(sel.value);
+        updateAnswerButtons(idx >= 0 ? QUESTION_BANK[idx] : null);
+      });
+    });
+
+    function sendQuestion() {
+      const idx = document.getElementById("questionList").value;
+      if (idx === "") return;
+      const selected = QUESTION_BANK[Number(idx)];
+      updateAnswerButtons(selected);
+      sendEvent({ type: "select_question", payload: selected });
+    }
+
+    function updateAnswerButtons(selected) {
+      const buttons = [
+        document.getElementById('btnAns1'),
+        document.getElementById('btnAns2'),
+        document.getElementById('btnAns3'),
+        document.getElementById('btnAns4')
+      ];
+      if (!selected) {
+        buttons.forEach((b, i) => { b.textContent = `Respuesta ${i+1}`; b.disabled = true; b.classList.remove('answered'); });
+        return;
+      }
+      buttons.forEach((b, i) => {
+        const ans = selected.answers[i];
+        if (ans) { b.textContent = ans.text; b.disabled = false; b.classList.remove('answered'); }
+        else { b.textContent = `—`; b.disabled = true; b.classList.remove('answered'); }
+      });
+    }
+
+    function sendAnswer(num) {
+      sendEvent({ type: "reveal_answer", number: num });
+      const btn = document.getElementById(`btnAns${num}`);
+      if (btn) {
+        btn.classList.add('answered');
+        btn.disabled = true;
+      }
+    }
+
+    function strike() { sendEvent({ type: 'strike' }); }
+    function undoStrike() { sendEvent({ type: 'undo_strike' }); }
+    function assignRound(group) { sendEvent({ type: 'assign_round', group }); }
+    function showWinner() { sendEvent({ type: 'show_winner' }); }
+  </script>
+</body>
+</html>
