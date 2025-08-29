@@ -27,6 +27,7 @@
 
   <div id="roundInfo" style="margin-top:8px;">
     <span>Strikes: <strong id="strikeCount">0</strong></span>
+    <div id="strikeDisplay" class="strike-display"></div>
   </div>
   <div id="answers">
     <div data-num="1" class="covered">
@@ -57,6 +58,19 @@
     let strikeCount = 0;
     let roundPot = 0;
     let scores = { A: 0, B: 0 };
+
+    // Función para actualizar la visualización de strikes
+    function updateStrikeDisplay() {
+      const strikeDisplay = document.getElementById('strikeDisplay');
+      strikeDisplay.innerHTML = '';
+      
+      for (let i = 0; i < strikeCount; i++) {
+        const strikeX = document.createElement('span');
+        strikeX.className = 'strike-x';
+        strikeX.textContent = '❌';
+        strikeDisplay.appendChild(strikeX);
+      }
+    }
 
 
 
@@ -326,6 +340,7 @@ logo.style.cssText = `
         strikeCount = 0; roundPot = 0;
         document.getElementById('strikeCount').textContent = '0';
         document.getElementById('roundPot').textContent = '0';
+        updateStrikeDisplay();
         // Comunicar reset de ronda
         sendEvent({ type: 'reset_round' });
       }
@@ -375,10 +390,12 @@ logo.style.cssText = `
       if (data.type === 'strike') {
         strikeCount = Math.min(3, strikeCount + 1);
         document.getElementById('strikeCount').textContent = String(strikeCount);
+        updateStrikeDisplay();
       }
       if (data.type === 'undo_strike') {
         strikeCount = 0;
         document.getElementById('strikeCount').textContent = '0';
+        updateStrikeDisplay();
       }
       if (data.type === 'round_points_add') {
         roundPot += data.value;
@@ -470,6 +487,7 @@ logo.style.cssText = `
         strikeCount = 0; roundPot = 0;
         document.getElementById('strikeCount').textContent = '0';
         document.getElementById('roundPot').textContent = '0';
+        updateStrikeDisplay();
         // reset puntuaciones
         scores = { A: 0, B: 0 };
         document.getElementById('scoreA').textContent = '0';
@@ -481,6 +499,9 @@ logo.style.cssText = `
         resetBoard();
       }
     });
+    
+    // Inicializar la visualización de strikes al cargar la página
+    updateStrikeDisplay();
   </script>
 </body>
 </html>
