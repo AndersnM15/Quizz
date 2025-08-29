@@ -222,7 +222,7 @@ select:focus {
   animation: emojiCelebration 0.8s ease forwards;
 }
 
-/* Animación específica para emojis de decepción (respuestas incorrectas) */
+/* Animación específica para emojis de decepción (respuestas con puntaje mínimo) */
 #answers > div.reveal.zero-points .answer-emoji.show {
   animation: emojiDisappointment 0.8s ease forwards;
 }
@@ -264,9 +264,9 @@ select:focus {
   animation: none; /* sin fade del cover */
 }
 
-/* Efecto especial para respuestas con 0 puntos */
+/* Efecto especial para respuestas con puntaje mínimo */
 #answers > div.reveal.zero-points {
-  animation: none; /* quitar rebote en 0 puntos */
+  animation: none; /* quitar rebote en puntaje mínimo */
   background: linear-gradient(135deg, #fed7d7, #feb2b2) !important;
   border-color: #fc8181 !important;
 }
@@ -346,7 +346,7 @@ select:focus {
   }
 }
 
-/* Animación especial para respuestas con 0 puntos */
+/* Animación especial para respuestas con puntaje mínimo */
 @keyframes revealZeroPoints {
   0% {
     transform: scale(0.8) rotateX(90deg);
@@ -690,11 +690,11 @@ select:focus {
   align-items: center;
 }
 
-.strike-x {
-  font-size: 40px;
-  animation: strikeAppear 0.5s ease-out;
+.strike-krake {
+  width: 80px;
+  height: 80px;
+  animation: strikeAppear 0.5s ease-out, strikeShake 2s ease-in-out infinite;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-  line-height: 1;
 }
 
 @keyframes strikeAppear {
@@ -709,6 +709,39 @@ select:focus {
   100% {
     transform: scale(1) rotate(0deg);
     opacity: 1;
+  }
+}
+
+@keyframes strikeShake {
+  0%, 100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  10% {
+    transform: translateX(-2px) rotate(-1deg);
+  }
+  20% {
+    transform: translateX(2px) rotate(1deg);
+  }
+  30% {
+    transform: translateX(-2px) rotate(-1deg);
+  }
+  40% {
+    transform: translateX(2px) rotate(1deg);
+  }
+  50% {
+    transform: translateX(-1px) rotate(-0.5deg);
+  }
+  60% {
+    transform: translateX(1px) rotate(0.5deg);
+  }
+  70% {
+    transform: translateX(-1px) rotate(-0.5deg);
+  }
+  80% {
+    transform: translateX(1px) rotate(0.5deg);
+  }
+  90% {
+    transform: translateX(-0.5px) rotate(-0.25deg);
   }
 }
 
