@@ -65,10 +65,11 @@
       strikeDisplay.innerHTML = '';
       
       for (let i = 0; i < strikeCount; i++) {
-        const strikeX = document.createElement('span');
-        strikeX.className = 'strike-x';
-        strikeX.textContent = '❌';
-        strikeDisplay.appendChild(strikeX);
+        const strikeKrake = document.createElement('img');
+        strikeKrake.className = 'strike-krake';
+        strikeKrake.src = './Krakesito-Triste.ico';
+        strikeKrake.alt = 'Strike';
+        strikeDisplay.appendChild(strikeKrake);
       }
     }
 
@@ -192,7 +193,7 @@ logo.style.cssText = `
   document.documentElement.classList.add('no-x-scroll');
   // Crear el logo central triste (se insertará dentro del contenedor)
   const logo = document.createElement('img');
-  logo.src = './Krakesito-Triste.ico';
+  logo.src = './Krakesito-Feliz.ico';
   logo.className = 'triste-logo';
   logo.style.cssText = `
     position: absolute; /* relativo al contenedor fijo */
@@ -355,8 +356,9 @@ logo.style.cssText = `
         node.classList.remove('covered');
         void node.offsetWidth; // fuerza reflow
         
-        // Aplicar clase especial para respuestas con 0 puntos
-        if (ans.points === 0) {
+        // Aplicar clase especial para respuestas con puntaje mínimo
+        const minPoints = Math.min(...current.answers.filter(a => a).map(a => a.points));
+        if (ans.points === minPoints) {
           node.classList.add('reveal', 'zero-points');
         } else {
           node.classList.add('reveal');
@@ -367,7 +369,8 @@ logo.style.cssText = `
            const emoji = node.querySelector('.answer-emoji');
            if (emoji) {
              // Cambiar emoji según si es correcto o incorrecto
-             if (ans.points > 0) {
+             const minPoints = Math.min(...current.answers.filter(a => a).map(a => a.points));
+             if (ans.points > minPoints) {
                emoji.textContent = '🎉';
                // Crear serpentinas para respuestas correctas
                createConfetti(node);

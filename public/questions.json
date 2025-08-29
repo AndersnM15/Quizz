@@ -4,8 +4,8 @@
     "answers": [
       { "text": "JavaScript", "points": 30 },
       { "text": "Python", "points": 25 },
-      { "text": "Java", "points": 20 },
-      { "text": "C++", "points": 0 }
+      { "text": "Java", "points": 9 },
+      { "text": "C++", "points": 10 }
     ]
   },
   {
@@ -14,7 +14,7 @@
       { "text": "React", "points": 28 },
       { "text": "Vue", "points": 24 },
       { "text": "Angular", "points": 20 },
-      { "text": "Express", "points": 0 }
+      { "text": "Express", "points": 1 }
     ]
   }
 ]
