@@ -681,6 +681,37 @@ select:focus {
   flex-shrink: 0;
 }
 
+/* Estilos para la visualización de strikes */
+.strike-display {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
+  align-items: center;
+}
+
+.strike-x {
+  font-size: 40px;
+  animation: strikeAppear 0.5s ease-out;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  line-height: 1;
+}
+
+@keyframes strikeAppear {
+  0% {
+    transform: scale(0) rotate(-180deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(-90deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
 /* Estilos específicos para control.html */
 .control-view .group {
   margin-top: 9px;
