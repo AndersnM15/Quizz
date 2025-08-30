@@ -267,39 +267,39 @@ select:focus {
 /* Efecto especial para respuestas con puntaje mínimo */
 #answers > div.reveal.zero-points {
   animation: none; /* quitar rebote en puntaje mínimo */
-  background: linear-gradient(135deg, #fed7d7, #feb2b2) !important;
-  border-color: #fc8181 !important;
+  background: linear-gradient(135deg, #e2e8f0, #cbd5e0) !important;
+  border-color: #a0aec0 !important;
 }
 
 #answers > div.reveal.zero-points .points {
-  color: #e53e3e !important;
+  color: #4a5568 !important;
   background: none !important;
-  -webkit-text-fill-color: #e53e3e !important;
+  -webkit-text-fill-color: #4a5568 !important;
 }
 
 #answers > div.reveal.zero-points .text {
   animation: textReveal 0.6s ease 0.3s both;
-  color: #c53030 !important;
+  color: #2d3748 !important;
 }
 
 /* Colores diferentes para cada respuesta revelada */
 #answers > div.reveal[data-num="1"] {
-  background: linear-gradient(135deg, #fff9db, #fef3c7); /* amarillos suaves */
-  border-color: #facc15; /* amarillo dorado */
+  background: linear-gradient(135deg, #fef5e7, #fed7aa); /* naranjas suaves */
+  border-color: #f59e0b;
 }
 
 #answers > div.reveal[data-num="2"] {
-  background: linear-gradient(135deg, #c6f6d5, #9ae6b4);
-  border-color: #68d391;
+  background: linear-gradient(135deg, #e6fffa, #b2f5ea); /* turquesas suaves */
+  border-color: #38b2ac;
 }
 
 #answers > div.reveal[data-num="3"] {
-  background: linear-gradient(135deg, #bee3f8, #90cdf4);
-  border-color: #63b3ed;
+  background: linear-gradient(135deg, #f0fff4, #c6f6d5); /* verdes suaves */
+  border-color: #48bb78;
 }
 
 #answers > div.reveal[data-num="4"] {
-  background: linear-gradient(135deg, #faf5ff, #e9d8fd);
+  background: linear-gradient(135deg, #faf5ff, #e9d8fd); /* púrpuras suaves */
   border-color: #b794f4;
 }
 
@@ -487,97 +487,11 @@ select:focus {
   }
 }
 
-/* Animación para el logo central triste */
-@keyframes logoTriste {
-  0% {
-    transform: scale(0) translateY(0);
-    opacity: 0;
-  }
-  15% {
-    transform: scale(1.1) translateY(-20px);
-    opacity: 1;
-  }
-  30% {
-    transform: scale(0.95) translateY(-15px);
-    opacity: 1;
-  }
-  45% {
-    transform: scale(1.05) translateY(-18px);
-    opacity: 1;
-  }
-  60% {
-    transform: scale(0.98) translateY(-12px);
-    opacity: 1;
-  }
-  75% {
-    transform: scale(1.02) translateY(-16px);
-    opacity: 0.9;
-  }
-  90% {
-    transform: scale(0.99) translateY(-13px);
-    opacity: 0.7;
-  }
-  100% {
-    transform: scale(1) translateY(0);
-    opacity: 0;
-  }
-}
 
-/* Animación para las nubes oscuras */
-@keyframes cloudFloat {
-  0% {
-    transform: scale(0) translateY(20px);
-    opacity: 0;
-  }
-  20% {
-    transform: scale(1.1) translateY(10px);
-    opacity: 0.8;
-  }
-  40% {
-    transform: scale(0.95) translateY(15px);
-    opacity: 1;
-  }
-  60% {
-    transform: scale(1.05) translateY(8px);
-    opacity: 1;
-  }
-  80% {
-    transform: scale(0.98) translateY(12px);
-    opacity: 0.9;
-  }
-  100% {
-    transform: scale(1) translateY(0);
-    opacity: 0;
-  }
-}
 
-/* Animación para las gotas de lluvia */
-@keyframes raindropFall {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 0;
-  }
-  20% {
-    transform: translateY(20px) scale(1.1);
-    opacity: 1;
-  }
-  40% {
-    transform: translateY(40px) scale(1);
-    opacity: 1;
-  }
-  60% {
-    transform: translateY(60px) scale(0.8);
-    opacity: 0.9;
-  }
-  80% {
-    transform: translateY(80px) scale(0.7);
-    opacity: 0.7;
-  }
-  100% {
-    transform: translateY(100px) scale(0.6);
-    opacity: 0;
-  }
-}
+
+
+
 
 /* Marcador mejorado */
 .scoreboard {

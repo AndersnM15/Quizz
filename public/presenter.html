@@ -12,7 +12,7 @@
 
   <div class="scoreboard" style="margin-top:12px;">
     <div class="card">
-      <div>Grupo A</div>
+      <div>Grupo Onichan</div>
       <div class="value" id="scoreA">0</div>
     </div>
     <div class="card">
@@ -20,7 +20,7 @@
       <div class="value" id="roundPot">0</div>
     </div>
     <div class="card">
-      <div>Grupo B</div>
+      <div>Equipo Dinamita</div>
       <div class="value" id="scoreB">0</div>
     </div>
   </div>
@@ -188,129 +188,7 @@ logo.style.cssText = `
         }, 2500);
       }
 
-      function createTristeAnimation(answerElement) {
-  // Bloquear scroll horizontal del documento mientras dura la animación
-  document.documentElement.classList.add('no-x-scroll');
-  // Crear el logo central triste (se insertará dentro del contenedor)
-  const logo = document.createElement('img');
-  logo.src = './Krakesito-Feliz.ico';
-  logo.className = 'triste-logo';
-  logo.style.cssText = `
-    position: absolute; /* relativo al contenedor fijo */
-    width: 120px; 
-    height: 120px;
-    pointer-events: none;
-    z-index: 1001;
-    animation: logoTriste 2.5s ease-out forwards;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-  `;
 
-  const rect = answerElement.getBoundingClientRect();
-  const startX = rect.left + rect.width / 2;
-  const startY = rect.top + rect.height / 2;
-
-  // Contenedor invisible que evita overflow
-  const container = document.createElement('div');
-  container.style.cssText = `
-    position: fixed;
-    inset: 0; /* top:0; right:0; bottom:0; left:0 */
-    pointer-events: none;
-    z-index: 1000;
-    overflow: hidden;
-    clip-path: inset(0);
-  `;
-  document.body.appendChild(container);
-
-  // Posicionar el logo dentro del contenedor y acotarlo a su tamaño
-  const containerWidth = container.clientWidth;
-  const containerHeight = container.clientHeight;
-  const baseLogoX = Math.max(0, Math.min(containerWidth - 120, startX - 60));
-  const baseLogoY = Math.max(0, Math.min(containerHeight - 120, startY - 60));
-  logo.style.left = baseLogoX + 'px';
-  logo.style.top = baseLogoY + 'px';
-  container.appendChild(logo);
-
-  // Crear nubes (3 centradas) con posicionamiento fijo y límites
-  const cloudCount = 3;
-  for (let i = 0; i < cloudCount; i++) {
-    const cloud = document.createElement('div');
-    cloud.className = 'rain-cloud';
-
-    const size = 70 + Math.random() * 15;
-    const offsetX = (i - (cloudCount - 1) / 2) * (size + 40);
-    const offsetY = -120;
-
-    cloud.style.cssText = `
-      position: absolute;
-      width: ${size}px;
-      height: ${size * 0.6}px;
-      background: linear-gradient(135deg, #4a5568, #2d3748);
-      border-radius: 50px;
-      pointer-events: none;
-      z-index: 1000;
-      animation: cloudFloat 2.5s ease-out forwards;
-      animation-delay: ${Math.random() * 0.3}s;
-      opacity: 0;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-    `;
-    // Calcular posición y acotar a viewport
-    const cloudX = startX + offsetX - size/2;
-    const cloudY = startY + offsetY - size/2;
-    const finalCloudX = Math.max(0, Math.min(container.clientWidth - size, cloudX));
-    const finalCloudY = Math.max(0, Math.min(container.clientHeight - size * 0.6, cloudY));
-    cloud.style.left = finalCloudX + 'px';
-    cloud.style.top = finalCloudY + 'px';
-
-    container.appendChild(cloud);
-
-    // Gotas de lluvia
-    const raindropCount = 10 + Math.floor(Math.random() * 5);
-    for (let j = 0; j < raindropCount; j++) {
-      const raindrop = document.createElement('div');
-      raindrop.className = 'raindrop';
-
-      const raindropSize = 2 + Math.random() * 3;
-      const raindropDelay = Math.random();
-
-      raindrop.style.cssText = `
-        position: absolute;
-        width: ${raindropSize}px;
-        height: ${raindropSize * 3}px;
-        background: linear-gradient(to bottom, #63b3ed, #3182ce);
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 999;
-        animation: raindropFall 2.5s ease-out forwards;
-        animation-delay: ${raindropDelay}s;
-        opacity: 0;
-      `;
-      // Posicionar gotas alrededor de la nube y acotar
-      const dropX = (finalCloudX + size/2) + (Math.random() - 0.5) * 40 - raindropSize/2;
-      const dropY = (finalCloudY + size * 0.6) - raindropSize/2;
-      const finalDropX = Math.max(0, Math.min(container.clientWidth - raindropSize, dropX));
-      const finalDropY = Math.max(0, Math.min(container.clientHeight - raindropSize * 3, dropY));
-      raindrop.style.left = finalDropX + 'px';
-      raindrop.style.top = finalDropY + 'px';
-
-      container.appendChild(raindrop);
-
-      setTimeout(() => {
-        if (raindrop.parentNode) raindrop.parentNode.removeChild(raindrop);
-      }, 3000 + raindropDelay * 1000);
-    }
-
-    setTimeout(() => {
-      if (cloud.parentNode) cloud.parentNode.removeChild(cloud);
-    }, 3000);
-  }
-
-  // Remover todo al final
-  setTimeout(() => {
-    if (logo.parentNode) logo.parentNode.removeChild(logo);
-    if (container.parentNode) container.parentNode.removeChild(container);
-    document.documentElement.classList.remove('no-x-scroll');
-  }, 3000);
-}
 
     onSocketJSON((data) => {
       if (data.type === "select_question") {
@@ -375,9 +253,9 @@ logo.style.cssText = `
                // Crear serpentinas para respuestas correctas
                createConfetti(node);
              } else {
-               emoji.textContent = '😞';
-               // Crear animación triste para respuestas incorrectas
-               createTristeAnimation(node);
+               emoji.textContent = '🎉';
+               // Crear confeti para respuestas incorrectas también
+               createConfetti(node);
              }
              emoji.style.display = 'block';
              // Pequeño delay para la animación del emoji
@@ -419,12 +297,12 @@ logo.style.cssText = `
         // Limpiar overlays existentes antes de crear uno nuevo
         closeWinnerModal();
         
-        const winner = scores.A > scores.B ? 'A' : scores.B > scores.A ? 'B' : 'Empate';
+        const winner = scores.A > scores.B ? 'Onichan' : scores.B > scores.A ? 'Equipo Dinamita' : 'Empate';
         let message = '';
         if (winner === 'Empate') {
           message = '¡Empate! Ambos equipos tienen la misma puntuación.';
         } else {
-          message = `¡Ganador: Equipo ${winner}!`;
+          message = `¡Ganador: ${winner}!`;
         }
         
         // Crear overlay para mostrar el ganador
@@ -457,8 +335,8 @@ logo.style.cssText = `
           <h1 style="color: #2563eb; margin-bottom: 20px;">🏆 ¡Fin del Juego! 🏆</h1>
           <h2 style="margin-bottom: 20px;">${message}</h2>
           <div style="font-size: 18px; margin-bottom: 30px;">
-            <div>Equipo A: ${scores.A} puntos</div>
-            <div>Equipo B: ${scores.B} puntos</div>
+            <div>Grupo Onichan: ${scores.A} puntos</div>
+            <div>Dinamita: ${scores.B} puntos</div>
           </div>
           <div style="display: flex; gap: 12px; justify-content: center;">
             <button onclick="closeWinnerModal()" style="
