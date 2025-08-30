@@ -29,10 +29,10 @@
   {
     "question": "¿Qué frase sueles decir cuando algo falla en tu código?",
     "answers": [
-      { "text": "Insultos y malas palabras", "points": 54 },
-      { "text": "Frustración y quejas", "points": 29 },
-      { "text": "Justificaciones", "points": 17 },
-      { "text": "Pedir ayuda o rendirse", "points": 8 }
+      { "text": "Insultos y malas palabras (“Mierda”, “Cha madre”, “Que verga”, “HDP”, “Maldita sea”)", "points": 54 },
+      { "text": "Frustración y quejas (“Que vaina”, “Rayos”, “Miércoles”)", "points": 29 },
+      { "text": "Justificaciones (“Antes sí funcionaba”, “Error capa 8”)", "points": 17 },
+      { "text": "Pedir ayuda o rendirse (“Pedir ayuda urgente”, “Llamar al jefe”)", "points": 8 }
     ]
   },
   {
