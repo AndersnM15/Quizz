@@ -16,6 +16,113 @@
       { "text": "Angular", "points": 20 },
       { "text": "Express", "points": 1 }
     ]
+  },
+  {
+    "question": "¿Cuál es el primer programa o aplicación que abres al prender tu computadora?",
+    "answers": [
+      { "text": "Teams", "points": 39 },
+      { "text": "Navegador web", "points": 35 },
+      { "text": "Spotify", "points": 8 },
+      { "text": "WhatsApp", "points": 6 }
+    ]
+  },
+  {
+    "question": "¿Cuál fue el primer lenguaje que aprendiste?",
+    "answers": [
+      { "text": "C++", "points": 25 },
+      { "text": "Java", "points": 20 },
+      { "text": "C", "points": 19 },
+      { "text": "Pascal", "points": 10 }
+    ]
+  },
+  {
+    "question": "¿Qué bebida no puede faltarte mientras programas?",
+    "answers": [
+      { "text": "Agua", "points": 49 },
+      { "text": "Café", "points": 36 },
+      { "text": "Coca Cola", "points": 4 },
+      { "text": "Cerveza", "points": 2 }
+    ]
+  },
+  {
+    "question": "¿Qué frase sueles decir cuando algo falla en tu código?",
+    "answers": [
+      { "text": "Insultos y malas palabras", "points": 54 },
+      { "text": "Frustración y quejas", "points": 29 },
+      { "text": "Justificaciones", "points": 17 },
+      { "text": "Pedir ayuda o rendirse", "points": 8 }
+    ]
+  },
+  {
+    "question": "¿Qué haces cuando el deploy falla a última hora?",
+    "answers": [
+      { "text": "Frustración y quejas", "points": 38 },
+      { "text": "Acciones técnicas", "points": 31 },
+      { "text": "Pedir ayuda o rendirse", "points": 13 },
+      { "text": "Insultos / desahogo", "points": 13 }
+    ]
+  },
+  {
+    "question": "¿Cuál es tu hobbie más común fuera de la programación?",
+    "answers": [
+      { "text": "Videojuegos", "points": 12 },
+      { "text": "Dormir", "points": 5 },
+      { "text": "Ver series", "points": 4 },
+      { "text": "Escuchar música", "points": 3 }
+    ]
+  },
+  {
+    "question": "¿Quién es tu ídolo tecnológico o referente en el mundo de la programación/tecnología?",
+    "answers": [
+      { "text": "Linus Torvalds", "points": 22 },
+      { "text": "Ninguno", "points": 20 },
+      { "text": "Midudev", "points": 16 },
+      { "text": "Steve Jobs", "points": 10 }
+    ]
+  },
+  {
+    "question": "¿Qué página o aplicación visitas casi todos los días para recibir ayuda con tu código?",
+    "answers": [
+      { "text": "ChatGPT", "points": 61 },
+      { "text": "Stack Overflow", "points": 13 },
+      { "text": "Google", "points": 7 },
+      { "text": "Copilot", "points": 6 }
+    ]
+  },
+  {
+    "question": "¿Qué tarea de programación te resulta más aburrida?",
+    "answers": [
+      { "text": "La documentación aburrida", "points": 71 },
+      { "text": "Las pruebas eternas (unitarias, tests)", "points": 18 },
+      { "text": "El diseño sin flow (maquetar/estilos)", "points": 7 },
+      { "text": "El CRUD repetitivo de siempre", "points": 5 }
+    ]
+  },
+  {
+    "question": "¿Qué excusa sueles dar en las reuniones de desarrollo?",
+    "answers": [
+      { "text": "Ninguna / No doy excusas", "points": 38 },
+      { "text": "Se me fue el internet", "points": 8 },
+      { "text": "Estoy enfermo", "points": 8 },
+      { "text": "Falta tiempo", "points": 8 }
+    ]
+  },
+  {
+    "question": "¿Qué música escuchas normalmente mientras programas?",
+    "answers": [
+      { "text": "Rock", "points": 28 },
+      { "text": "Ninguna / No escucho música", "points": 17 },
+      { "text": "Electrónica", "points": 15 },
+      { "text": "Pop", "points": 9 }
+    ]
+  },
+  {
+    "question": "¿Qué tecla usas más en tu teclado cuando programas?",
+    "answers": [
+      { "text": "Enter", "points": 20 },
+      { "text": "Ctrl / Control", "points": 19 },
+      { "text": "Tab", "points": 14 },
+      { "text": "Delete", "points": 5 }
+    ]
   }
 ]
-
